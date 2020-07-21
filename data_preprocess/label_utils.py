@@ -43,15 +43,15 @@ def get_span_labels(sentence_tags, inv_label_mapping=None):
     last = "O"
     start = -1 
     for i, tag in enumerate(sentence_tags):
-        pos, _ = (None, "O") if tag == "O" else tag.split("-")
+        pos, _ = (None, "O") if tag == "O" else tag.split("_")
         if (pos == "S" or pos == "B" or tag == "O") and last != "O":
-            span_labels.append((start, i - 1, last.split("-")[-1]))
+            span_labels.append((start, i - 1, last.split("_")[-1]))
         if pos == "B" or pos == "S" or last == "O":
             start = i 
         last = tag 
 
     if sentence_tags[-1] != "O":
-        span_labels.append((start, len(sentence_tags) -1 , sentence_tags[-1].split("-")[-1]))
+        span_labels.append((start, len(sentence_tags) -1 , sentence_tags[-1].split("_")[-1]))
 
     return span_labels 
 
@@ -67,14 +67,14 @@ def get_tags(span_labels, length, encoding):
 
     for start, end, tag in span_labels:
         for i in range(start, end + 1):
-            tags[i] = "M-" + tag 
+            tags[i] = "M_" + tag
 
         if "E" in encoding:
-            tags[end] = "E-" + tag 
+            tags[end] = "E_" + tag
         if "B" in encoding:
-            tags[start] = "B-" + tag 
+            tags[start] = "B_" + tag
         if "S" in encoding and start == end:
-            tags[start] = "S-" + tag 
+            tags[start] = "S_" + tag
     return tags 
 
 
@@ -88,16 +88,16 @@ def iob_iobes(tags):
     for i, tag in enumerate(tags):
         if tag == "O":
             new_tags.append(tag)
-        elif tag.split("-")[0] == "B":
-            if i + 1 != len(tags) and tags[i+1].split("-")[0] == "I":
+        elif tag.split("_")[0] == "B":
+            if i + 1 != len(tags) and tags[i+1].split("_")[0] == "I":
                 new_tags.append(tag)
             else:
-                new_tags.append(tag.replace("B-", "S-"))
-        elif tag.split("-")[0] == "I":
-            if i + 1 < len(tags) and tags[i + 1].split("-")[0] == "I":
+                new_tags.append(tag.replace("B_", "S_"))
+        elif tag.split("_")[0] == "I":
+            if i + 1 < len(tags) and tags[i + 1].split("_")[0] == "I":
                 new_tags.append(tag)
             else:
-                new_tags.append(tag.replace("I-", "E-"))
+                new_tags.append(tag.replace("I_", "E_"))
         else:
             raise Exception("invalid IOB format !!")
     return new_tags 

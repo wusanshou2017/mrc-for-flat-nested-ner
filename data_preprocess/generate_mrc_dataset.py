@@ -143,6 +143,3 @@ def transform_examples_to_qa_features(query_map, entity_labels, data_instances, 
 
 
     return mrc_ner_dataset
-
-
-

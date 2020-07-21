@@ -16,14 +16,14 @@ from data_loader.mrc_utils import read_mrc_ner_examples
 class QueryNERProcessor(object):
     # processor for the query-based ner dataset 
     def get_train_examples(self, data_dir):
-        data = read_mrc_ner_examples(os.path.join(data_dir, "mrc-ner.train"))
+        data = read_mrc_ner_examples(os.path.join(data_dir, "mrc_train.json"))
         return data
 
     def get_dev_examples(self, data_dir):
-        return read_mrc_ner_examples(os.path.join(data_dir, "mrc-ner.dev"))
+        return read_mrc_ner_examples(os.path.join(data_dir, "mrc_test.json"))
 
     def get_test_examples(self, data_dir):
-        return read_mrc_ner_examples(os.path.join(data_dir, "mrc-ner.test"))
+        return read_mrc_ner_examples(os.path.join(data_dir, "mrc_test.json"))
 
 
 class Conll03Processor(QueryNERProcessor):
@@ -64,6 +64,10 @@ class ACE2005Processor(QueryNERProcessor):
 class ACE2004Processor(QueryNERProcessor):
     def get_labels(self, ):
         return ["GPE", "ORG", "PER", "FAC", "VEH", "LOC", "WEA", "O"]
+
+class mrc_trainProcessor(QueryNERProcessor):
+    def get_labels(self,):
+        return ["O","time","hname","dname"]
 
 
 

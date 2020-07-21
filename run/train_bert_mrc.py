@@ -22,7 +22,7 @@ from torch import nn
 
 from data_loader.model_config import Config 
 from data_loader.mrc_data_loader import MRCNERDataLoader
-from data_loader.mrc_data_processor import Conll03Processor, MSRAProcessor, Onto4ZhProcessor, Onto5EngProcessor, GeniaProcessor, ACE2004Processor, ACE2005Processor, ResumeZhProcessor
+from data_loader.mrc_data_processor import mrc_trainProcessor,Conll03Processor, MSRAProcessor, Onto4ZhProcessor, Onto5EngProcessor, GeniaProcessor, ACE2004Processor, ACE2005Processor, ResumeZhProcessor
 from layer.optim import AdamW, lr_linear_decay
 from model.bert_mrc import BertQueryNER
 from data_loader.bert_tokenizer import BertTokenizer4Tagger 
@@ -45,14 +45,14 @@ def args_parser():
     parser.add_argument("--test_batch_size", default=32, type=int)
     parser.add_argument("--checkpoint", default=100, type=int)
     parser.add_argument("--learning_rate", default=5e-5, type=float)
-    parser.add_argument("--num_train_epochs", default=5, type=int)
+    parser.add_argument("--num_train_epochs", default=10, type=int)
     parser.add_argument("--warmup_proportion", default=0.1, type=float)
     parser.add_argument("--local_rank", type=int, default=-1)
     parser.add_argument("--gradient_accumulation_steps", type=int, default=1)
     parser.add_argument("--seed", type=int, default=3006)
     parser.add_argument("--export_model", type=bool, default=False)
     parser.add_argument("--output_dir", type=str, default="/home/lixiaoya/output")
-    parser.add_argument("--data_sign", type=str, default="msra_ner")
+    parser.add_argument("--data_sign", type=str, default="mrc_train")
     parser.add_argument("--weight_start", type=float, default=1.0) 
     parser.add_argument("--weight_end", type=float, default=1.0) 
     parser.add_argument("--weight_span", type=float, default=1.0) 
@@ -96,7 +96,9 @@ def load_data(config):
     elif config.data_sign == "ace2005":
         data_processor = ACE2005Processor()
     elif config.data_sign == "resume":
-            data_processor = ResumeZhProcessor()
+        data_processor = ResumeZhProcessor()
+    elif config.data_sign  =="mrc_train":
+        data_processor = mrc_trainProcessor()
     else:
         raise ValueError("Please Notice that your data_sign DO NOT exits !!!!!")
 

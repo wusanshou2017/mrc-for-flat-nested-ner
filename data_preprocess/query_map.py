@@ -25,7 +25,7 @@ path_en_genia = os.path.join(root_path, "data_preprocess/queries/en_genia.json")
 path_en_ontonotes5 = os.path.join(root_path, "data_preprocess/queries/en_ontonotes5.json")
 path_zh_msra = os.path.join(root_path, "data_preprocess/queries/zh_msra.json")
 path_zh_ontonotes4 = os.path.join(root_path, "data_preprocess/queries/zh_ontonotes4.json")
-
+path_mrc_train  = os.path.join(root_path, "data_preprocess/queries/zh_train_demo.json")
 
 
 def load_query_map(query_map_path):
@@ -42,7 +42,7 @@ query_en_genia = load_query_map(path_en_genia)
 query_en_ontonotes5 = load_query_map(path_en_ontonotes5)
 query_zh_msra = load_query_map(path_zh_msra)
 query_zh_ontonotes4 = load_query_map(path_zh_ontonotes4)
-
+query_mrc_train =load_query_map(path_mrc_train)
 
 queries_for_dataset = {
     "en_ace2004": query_en_ace2004,
@@ -51,7 +51,8 @@ queries_for_dataset = {
     "en_ontonotes5": query_en_ontonotes5,
     "en_genia": query_en_genia,
     "zh_ontonotes4": query_zh_ontonotes4,
-    "zh_msra": query_zh_msra
+    "zh_msra": query_zh_msra,
+    "mrc_train":query_mrc_train
 }
 
 

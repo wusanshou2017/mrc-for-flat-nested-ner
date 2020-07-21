@@ -236,8 +236,8 @@ def read_mrc_ner_examples(input_file, is_training=True, with_negative=True):
     """
 
     with open(input_file, "r") as f:
-        input_data = json.load(f) 
-
+        print("input_file...:", input_file)
+        input_data = json.load(f)
     def is_whitespace(c):
         if c == " " or c == "\t" or c == "\r" or c == "\n" or ord(c) == 0x202F:
             return True 
